@@ -11,7 +11,7 @@ class BikedetailsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+
         DB::table('bikedetails')->delete();
         $json = File::get("database/data-sample/bikedetails.json");
         $data = json_decode($json);

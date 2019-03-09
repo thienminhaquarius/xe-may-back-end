@@ -12,6 +12,7 @@ class RatingsTableSeeder extends Seeder
      */
     public function run()
     {
+    
         DB::table('ratings')->delete();
         $json = File::get("database/data-sample/ratings.json");
         $data = json_decode($json);

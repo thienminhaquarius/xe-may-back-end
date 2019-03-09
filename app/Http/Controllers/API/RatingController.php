@@ -22,7 +22,7 @@ class RatingController extends Controller
 
     public function index()
     {
-        return 'noob ^^';
+
     }
 
     /**
@@ -44,16 +44,21 @@ class RatingController extends Controller
         }
 
         if ($request->user()->id != $request->user_id) {
-            return response()->json(['error' => 'User rating is not the same'], 403);
+            return response()->json(['error' => 'User not found'], 403);
         }
 
         if (!Bike::find($request->bike_id)) {
             return response()->json(['error' => 'Product not found!'], 400);
         }
+        //crate or update rating
+        $rating = Rating::updateOrCreate([
+            'bike_id' => $request->bike_id,
+            'user_id' => $request->user_id,
+        ], [
+            'value' => $request->value,
+        ]);
 
-        $rating = Rating::create($request->only(['value', 'bike_id', 'user_id']));
         return $rating;
-
     }
 
     /**

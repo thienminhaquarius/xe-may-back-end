@@ -3,36 +3,140 @@
         "name": "bike1",
         "price": 900,
         "thumbnailImage": "1.jpg",
-        "user_id": 1
+        "user_id": 1,
+        "info": "Op"
     },
     {
         "name": "bike2",
         "price": 900,
         "thumbnailImage": "2.jpg",
-        "user_id": 1
+        "user_id": 1,
+        "info": "Op"
     },
     {
         "name": "bike3",
         "price": 900,
         "thumbnailImage": "3.jpg",
-        "user_id": 1
+        "user_id": 1,
+        "info": "Op"
     },
     {
         "name": "bike4",
-        "price": 900,
+        "price": 500,
         "thumbnailImage": "4.jpg",
-        "user_id": 1
+        "user_id": 1,
+        "info": "Op"
     },
     {
         "name": "bike5",
-        "price": 900,
+        "price": 5445,
         "thumbnailImage": "5.jpg",
-        "user_id": 1
+        "user_id": 1,
+        "info": "Op"
     },
     {
         "name": "bike6",
-        "price": 900,
+        "price": 65324,
         "thumbnailImage": "6.jpg",
-        "user_id": 1
+        "user_id": 1,
+        "info": "Op"
+    },
+    {
+        "name": "bike7",
+        "price": 5455,
+        "thumbnailImage": "7.jpg",
+        "user_id": 1,
+        "info": "Op"
+    },
+    {
+        "name": "bike8",
+        "price": 5455,
+        "thumbnailImage": "8.jpg",
+        "user_id": 1,
+        "info": "Op"
+    },
+    {
+        "name": "bike9",
+        "price": 5455,
+        "thumbnailImage": "9.jpg",
+        "user_id": 1,
+        "info": "Op"
+    },
+    {
+        "name": "bike10",
+        "price": 5455,
+        "thumbnailImage": "10.jpg",
+        "user_id": 1,
+        "info": "Op"
+    },
+    {
+        "name": "bike11",
+        "price": 5455,
+        "thumbnailImage": "11.jpg",
+        "user_id": 1,
+        "info": "Op"
+    },
+    {
+        "name": "bike12",
+        "price": 5455,
+        "thumbnailImage": "12.jpg",
+        "user_id": 1,
+        "info": "Op"
+    },
+    {
+        "name": "bike13",
+        "price": 5455,
+        "thumbnailImage": "13.jpg",
+        "user_id": 1,
+        "info": "Op"
+    },
+    {
+        "name": "bike14",
+        "price": 5455,
+        "thumbnailImage": "14.jpg",
+        "user_id": 1,
+        "info": "Op"
+    },
+    {
+        "name": "bike15",
+        "price": 5455,
+        "thumbnailImage": "15.jpg",
+        "user_id": 1,
+        "info": "Op"
+    },
+    {
+        "name": "bike16",
+        "price": 5455,
+        "thumbnailImage": "16.jpg",
+        "user_id": 1,
+        "info": "Op"
+    },
+    {
+        "name": "bike17",
+        "price": 5455,
+        "thumbnailImage": "17.jpg",
+        "user_id": 1,
+        "info": "Op"
+    },
+    {
+        "name": "bike18",
+        "price": 5455,
+        "thumbnailImage": "18.jpg",
+        "user_id": 1,
+        "info": "Op"
+    },
+    {
+        "name": "bike18",
+        "price": 5455,
+        "thumbnailImage": "19.jpg",
+        "user_id": 1,
+        "info": "Op"
+    },
+    {
+        "name": "bike18",
+        "price": 5455,
+        "thumbnailImage": "20.jpg",
+        "user_id": 1,
+        "info": "Op"
     }
 ]

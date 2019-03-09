@@ -3,5 +3,15 @@
         "value": "3",
         "user_id": "1",
         "bike_id": "1"
+    },
+    {
+        "value": "5",
+        "user_id": "1",
+        "bike_id": "3"
+    },
+    {
+        "value": "1",
+        "user_id": "1",
+        "bike_id": "4"
     }
 ]

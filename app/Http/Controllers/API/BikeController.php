@@ -4,8 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Bike;
 use App\Bikedetail;
+use App\Comment;
 use App\Http\Controllers\Controller;
+use App\Rating;
 use App\User;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Validator;
@@ -25,24 +28,48 @@ class BikeController extends Controller
 
     public function index(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'skip' => 'required|Numeric',
+            'take' => 'required|Numeric',
+            'order' => 'required|String',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
         $skip = $request->query('skip');
-        if ($skip == null) {
-            $skip = 0;
-        }
+        $take = $request->query('take');
 
-        $number = $request->query('number');
-        if ($number == null) {
-            $number = 4;
-        }
-        $listBikes = Bike::withCount('comments')->
-            orderBy('created_at', 'desc')->skip($skip)->take($number)->get();
+        if ($request->order == 'rating') {
 
-        foreach ($listBikes as $bike) {
-            $bike['ratings_avg'] = $bike->ratings->avg('value');
-            if ($bike['ratings_avg'] == null) {
-                $bike['ratings_avg'] = 0;
+            $listBikes = Bike::select(['id'])
+                ->withCount(['ratings as average_rating' => function ($q) {
+                    $q->select(DB::raw('coalesce(avg(value),0)'));
+                }])
+                ->orderByDesc('average_rating')
+                ->skip($skip)->take($take)
+                ->get();
+
+            foreach ($listBikes as $bike) {
+                unset($bike['average_rating']);
             }
+
+        } elseif ($request->order == 'comment') {
+
+            $listBikes = Bike::select(['id'])
+                ->withCount('comments')
+                ->orderBy('comments_count', 'desc')
+                ->skip($skip)->take($take)
+                ->get();
+
+            foreach ($listBikes as $bike) {
+                unset($bike['comments_count']);
+            }
+        } elseif ($request->order == 'time') {
+            $listBikes = Bike::select(['id'])->orderBy('created_at', 'desc')->skip($skip)->take($take)->get();
         }
+
         return $listBikes;
 
     }
@@ -55,6 +82,7 @@ class BikeController extends Controller
      */
     public function store(Request $request)
     {
+
         $payload = auth()->payload();
         $user = User::where('email', $payload['useremail'])->first();
 
@@ -68,10 +96,7 @@ class BikeController extends Controller
             'name' => 'required',
             'price' => 'required',
             'thumbnailImage' => 'required|string',
-
-            // //bikedetail validator
-            // 'info' => 'required|string',
-
+            'info' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -111,11 +136,28 @@ class BikeController extends Controller
      */
     public function show($id)
     {
+        $userHasRating = null;
+        //user request
+        // $payload = auth()->payload();
+
+        $user = auth()->user();
+
+        if ($user) {
+            //find rating user has rated this bike or return []
+            $userHasRating = Rating::where([
+                'user_id' => $user['id'],
+                'bike_id' => $id,
+            ])->first();
+        }
+
         $bike = Bike::with('bikedetail')->withCount('ratings')->findOrFail($id);
-        $bike['ratings_avg'] = $bike->ratings->avg('value');
+        $bike['ratings_avg'] = round($bike->ratings->avg('value'), 2);
         if ($bike['ratings_avg'] == null) {
             $bike['ratings_avg'] = 0;
         }
+
+        $bike['userHasRatingThis'] = $userHasRating;
+
         unset($bike['ratings']);
 
         return $bike;
@@ -146,13 +188,22 @@ class BikeController extends Controller
             return response()->json(['errors' => 'Only admin can delete product'], 422);
         }
 
-        $deleteBikeById = Bike::find($id);
-        $bikedetail = $deleteBikeById->bikedetail;
-        if($bikedetail){
-            $bikedetail->delete();
-        }
-        
-        $deleteBikeById->delete();
+        $bike = Bike::findOrFail($id);
+
+        //delele Image
+        $imageFolder = 'productThumbnailImage/';
+        Storage::disk('upload_image')->delete($imageFolder . $bike->thumbnailImage);
+
+        //delete bike detail
+        Bikedetail::where('bike_id', $bike->id)->delete();
+
+        //delete rating
+        Rating::where('bike_id', $bike->id)->delete();
+
+        //delete comment
+        Comment::where('bike_id', $bike->id)->delete();
+
+        $bike->delete();
         return response()->json([], 204);
     }
 }

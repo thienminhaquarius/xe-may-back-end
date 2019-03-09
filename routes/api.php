@@ -20,9 +20,13 @@ Route::get('bikecomment', 'API\BikedetailController@index');
 Route::post('bikecomment', 'API\BikedetailController@store');
 
 Route::apiResources([
+    'tests' => 'API\Test',
+
     'bikes' => 'API\BikeController',
     'comments' => 'API\CommentController',
     'ratings' => 'API\RatingController',
+    'admins' => 'API\Admin',
+    'bikedashboard' => 'API\BikeDashboardController',
 ]);
 
 Route::middleware('jwt.auth')->get('users', function (Request $request) {

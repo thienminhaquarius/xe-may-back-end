@@ -11,6 +11,9 @@ class CommentsTableSeeder extends Seeder
      */
     public function run()
     {
+
+     
+
         DB::table('comments')->delete();
         $json = File::get("database/data-sample/comments.json");
         $data = json_decode($json);

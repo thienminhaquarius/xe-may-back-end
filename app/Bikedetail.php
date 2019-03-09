@@ -15,9 +15,4 @@ class Bikedetail extends Model
     {
         return $this->belongsTo('App\Bike');
     }
-
-    public function imagedetails()
-    {
-        return $this->hasMany('App\Imagedetail');
-    }
 }

@@ -13,18 +13,30 @@ class CommentController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api');
-
+        $this->middleware('auth:api')->except(['index', 'show']);
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        return 'noob';
+        $validator = Validator::make($request->all(), [
+            'bike_id' => 'required|String',
+            'skip' => 'required|Numeric',
+            'take' => 'required|Numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $listIdComments = Comment::where('bike_id', $request->bike_id)
+            ->orderBy('created_at', 'desc')->skip($request->skip)->take($request->take)
+            ->get(['id']);
+
+        return $listIdComments;
     }
 
     /**
@@ -67,6 +79,9 @@ class CommentController extends Controller
     public function show($id)
     {
         //
+        $comment = Comment::findOrFail($id);
+        $comment->user;
+        return $comment;
     }
 
     /**
@@ -89,6 +104,6 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }
