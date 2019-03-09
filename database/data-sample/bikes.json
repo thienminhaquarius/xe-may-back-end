@@ -1,0 +1,38 @@
+[
+    {
+        "name": "bike1",
+        "price": 900,
+        "thumbnailImage": "1.jpg",
+        "user_id": 1
+    },
+    {
+        "name": "bike2",
+        "price": 900,
+        "thumbnailImage": "2.jpg",
+        "user_id": 1
+    },
+    {
+        "name": "bike3",
+        "price": 900,
+        "thumbnailImage": "3.jpg",
+        "user_id": 1
+    },
+    {
+        "name": "bike4",
+        "price": 900,
+        "thumbnailImage": "4.jpg",
+        "user_id": 1
+    },
+    {
+        "name": "bike5",
+        "price": 900,
+        "thumbnailImage": "5.jpg",
+        "user_id": 1
+    },
+    {
+        "name": "bike6",
+        "price": 900,
+        "thumbnailImage": "6.jpg",
+        "user_id": 1
+    }
+]
